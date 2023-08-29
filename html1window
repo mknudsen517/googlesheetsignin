@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  <style>
+  .line {
+    border: 5px outset #ead1dc;
+  }
+  </style> 
+  <div class="line"></div>   
+  </head>
+    <? var students = allStudents.get1Students(); ?>
+    <?students[0].sort();?>
+    <? for(var i=0; i<students[0].length; i++) { ?>
+      <? if(students[4][i] === false) { ?>
+        <input type="checkbox" name="student" value="<?=students[0][i]?>">
+        <label for="<?students[0][i]?>"><?=students[0][i]?></label>
+        <br>
+        <? } ?>
+    <? } ?>
+  <br>
+   <button id="btn">Sign In</button>
+
+</html>
+
+  <script>
+  var values = [];
+    const btn = document.querySelector('#btn');
+    btn.addEventListener('click', (event) => {
+      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+      //rhyno and runtime compatible for loop, ran into issues across users
+      for(var i=0; i<checkboxes.length; i++) {
+        values.push(checkboxes[i].value);
+      };  
+    google.script.run.handlews(values);
+
+    google.script.host.close();
+    });
+
+    
+
+  </script>
