@@ -1,0 +1,59 @@
+/*Maury Knudsen
+app script for signing in students listed in a csv dump from a scheduler where students span across 2 classrooms, 1 and 2
+*/
+
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+//csv dump sheet that includes status checkbox
+var workingsheet = ss.getSheetByName('Working Sheet');
+//reference sheet viewed by user
+var mastergameplan = ss.getSheetByName('Master Game Plan');
+
+
+class students {
+  constructor(name, intime, outtime, asgt, status) {
+    this.name = name = [];
+    this.intime = intime = [];
+    this.outtime = outtime = [];
+    this.asgt = asgt = [];
+    this.status = status = [];
+  }
+  get1Students() {
+    var lstudents = [];
+    this.name.length = 0;
+    this.intime.length = 0;
+    this.outtime.length = 0;
+    this.asgt.length = 0;
+    this.status.length = 0;
+    for(var i=1; i<=lastrow; i++) {
+      if(workingsheet.getRange(i,2).getValue() === "L") {
+        this.name.push(workingsheet.getRange(i,7).getValue());
+        this.intime.push(workingsheet.getRange(i,17).getDisplayValue());
+        this.outtime.push(workingsheet.getRange(i,19).getDisplayValue());
+        this.asgt.push(workingsheet.getRange(i,3).getValue());
+        this.status.push(workingsheet.getRange(i,4).getValue());
+      }
+    }
+    lstudents = [this.name, this.intime, this.outtime, this.asgt, this.status];
+    return lstudents;
+  }
+  get2Students() {
+    var estudents = [];
+    this.name.length = 0;
+    this.intime.length = 0;
+    this.outtime.length = 0;
+    this.asgt.length = 0;
+    this.status.length = 0;
+    for(var i=1; i<=lastrow; i++) {
+      if(workingsheet.getRange(i,2).getValue() === "E") {
+        this.name.push(workingsheet.getRange(i,7).getValue());
+        this.intime.push(workingsheet.getRange(i,17).getDisplayValue());
+        this.outtime.push(workingsheet.getRange(i,19).getDisplayValue());
+        this.asgt.push(workingsheet.getRange(i,3).getValue());
+        this.status.push(workingsheet.getRange(i,4).getValue());
+      }
+    }
+    estudents = [this.name, this.intime, this.outtime, this.asgt, this.status];
+    return estudents;
+  }
+
+const allStudents = new students();
