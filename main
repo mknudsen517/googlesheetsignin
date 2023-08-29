@@ -1,0 +1,42 @@
+/*
+  @OnlyCurrentDoc
+ */
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var workingsheet = ss.getSheetByName('Working Sheet');
+var lastrow;
+var trigger = 0;
+
+//runs faster than getRange("A:A").getLastRow()
+for(var i=2; i<500; i++) {
+  if(workingsheet.getRange(i,1).isBlank()) {
+    lastrow=i;
+    i=500;
+  }
+}
+
+//calls window for checking in students in classroom 1
+function checkin1() {
+  SpreadsheetApp.getUi();
+  var popup = HtmlService.createTemplateFromFile("checkinmenul.html");
+  SpreadsheetApp.getUi().showModelessDialog(popup.evaluate(), "Classroom L Check In");
+}
+
+//calls window for checking in students in classroom 2
+function checkin2() {
+  SpreadsheetApp.getUi();
+  var popup = HtmlService.createTemplateFromFile("checkinmenue.html");
+  SpreadsheetApp.getUi().showModelessDialog(popup.evaluate(), "Classroom E Check In");
+}
+
+//parses workingsheet to check in students
+function handlews(values) {
+  for(var i=0; i<values.length; i++) {
+    for (var j=1; j<lastrow; j++) {
+      if(values[i].localeCompare(workingsheet.getRange(j,7).getValue()) === 0) {
+        workingsheet.getRange(j,4).check();
+        j=lastrow;
+      }
+    }
+  }
+ui.alert("Signed in "+values);
+}
